@@ -1,0 +1,79 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    {% tailwind_css %}
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    {% load form_tags %}  <!-- Cargar los filtros personalizados -->
+    <div class="bg-gray-50 p-8 rounded-lg shadow-md w-full max-w-sm">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Iniciar Sesión</h1>
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="text-center p-2 rounded-md 
+                                {% if message.tags == 'success' %} bg-green-200 text-green-800 
+                                {% elif message.tags == 'error' %} bg-red-200 text-red-800 
+                                {% elif message.tags == 'warning' %} bg-yellow-200 text-yellow-800 
+                                {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                {{ form.username.label_tag }}
+                {{ form.username|add_class:"block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-indigo-500" }}
+                {% if form.username.errors %}
+                    <div class="text-red-500 text-sm">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                {{ form.password.label_tag }}
+                {{ form.password|add_class:"block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-indigo-500" }}
+                {% if form.password.errors %}
+                    <div class="text-red-500 text-sm">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+            <!-- Botón azul con hover más oscuro -->
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Iniciar sesión</button>
+        </form>
+        <!-- Texto gris oscuro y enlace verde esmeralda con hover más oscuro -->
+        <p class="text-center mt-4 text-gray-600">¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-green-500 hover:text-green-600">Regístrate aquí</a></p>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const username = document.getElementById('id_username');
+        const password = document.getElementById('id_password');
+        const validationErrors = document.createElement('div');
+        validationErrors.classList.add('text-red-500', 'text-sm', 'mb-4');
+    
+        form.addEventListener('submit', function(event) {
+            let errors = [];
+    
+            // Validar que los campos no estén vacíos
+            if (!username.value) {
+                errors.push("El campo de nombre de usuario no puede estar vacío.");
+            }
+    
+            if (!password.value) {
+                errors.push("El campo de contraseña no puede estar vacío.");
+            }
+            
+    
+            // Mostrar errores si los hay
+            if (errors.length > 0) {
+                event.preventDefault();  // Evitar el envío del formulario
+                validationErrors.innerHTML = errors.join('<br>');
+                form.prepend(validationErrors);  // Insertar los errores antes del formulario
+            }
+        });
+    </script>
+</body>
+</html>
