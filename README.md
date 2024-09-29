@@ -34,16 +34,17 @@ Este proyecto es una aplicación web desarrollada en Django que implementa un si
    ```
 
 3. Instala las dependencias necesarias:
-   (static_src)
-   ```bash
-   npm install
-   ```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+   * Desde \proyecto\authsys\static_src
+      ```bash
+      npm install
+      ```
+   * desde /proyecto
+      ```bash
+      pip install -r requirements.txt
+      ```
 
-4. Configura la base de datos y aplica las migraciones:
+4. Configura la base de datos y aplica las migraciones desde /proyecto:
 
    ```bash
    python manage.py makemigrations
@@ -55,12 +56,14 @@ Este proyecto es una aplicación web desarrollada en Django que implementa un si
    ```bash
    python manage.py createsuperuser
    ```
-6.1 Inicia el manager de tailwind
+
+6. Inicia el manager de tailwind desde /proyecto:
+
    ```bash
-  python manage.py tailwind start
+   python manage.py tailwind start
    ```
 
-6.2 Inicia el servidor de desarrollo:
+7. Inicia el servidor de desarrollo desde /proyecto:
 
    ```bash
    python manage.py runserver
